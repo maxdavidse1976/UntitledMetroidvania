@@ -1,22 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] Rigidbody2D _rigidBody;
-    [SerializeField] float _moveSpeed;
-    [SerializeField] float _jumpForce;
+    [SerializeField] float _moveSpeed = 8;
+    [SerializeField] float _jumpForce = 20;
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        _rigidBody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * _moveSpeed, _rigidBody.velocity.y);
     }
 }
