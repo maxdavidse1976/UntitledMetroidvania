@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _jumpForce = 20;
     [SerializeField] LayerMask _whatIsGround;
     [SerializeField] float _groundCheckRadius = .2f;
+    [SerializeField] Animator _animator;
+
     bool _isOnGround;
     
 
@@ -26,5 +28,8 @@ public class PlayerController : MonoBehaviour
         {
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
         }
+
+        _animator.SetBool("isOnGround", _isOnGround);
+        _animator.SetFloat("speed", Mathf.Abs(_rigidBody.velocity.x));
     }
 }
