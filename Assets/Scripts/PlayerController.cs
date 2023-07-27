@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D rigidBody;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float jumpForce;
+    [SerializeField] Rigidbody2D _rigidBody;
+    [SerializeField] float _moveSpeed;
+    [SerializeField] float _jumpForce;
 
     // Start is called before the first frame update
     void Start()
