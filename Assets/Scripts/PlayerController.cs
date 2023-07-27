@@ -4,23 +4,27 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] Rigidbody2D _rigidBody;
     [SerializeField] Transform _groundPoint;
+    [SerializeField] LayerMask _whatIsGround;
+    [SerializeField] Animator _animator;
+
+    [SerializeField] float _groundCheckRadius = .2f;
     [SerializeField] float _moveSpeed = 8;
     [SerializeField] float _jumpForce = 20;
-    [SerializeField] LayerMask _whatIsGround;
-    [SerializeField] float _groundCheckRadius = .2f;
-    [SerializeField] Animator _animator;
 
     bool _isOnGround;
     
-
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
         _rigidBody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * _moveSpeed, _rigidBody.velocity.y);
+
+        if (_rigidBody.velocity.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else if (_rigidBody.velocity.x > 0)
+        {
+            transform.localScale = Vector3.one;
+        }
 
         _isOnGround = Physics2D.OverlapCircle(_groundPoint.position, _groundCheckRadius, _whatIsGround);
         

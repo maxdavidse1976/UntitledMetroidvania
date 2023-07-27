@@ -605,13 +605,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidBody: {fileID: 1337101840}
   _groundPoint: {fileID: 1824514635}
-  _moveSpeed: 8
-  _jumpForce: 20
   _whatIsGround:
     serializedVersion: 2
     m_Bits: 64
-  _groundCheckRadius: 0.2
   _animator: {fileID: 110238276}
+  _groundCheckRadius: 0.2
+  _moveSpeed: 8
+  _jumpForce: 20
 --- !u!1 &1824514634
 GameObject:
   m_ObjectHideFlags: 0
