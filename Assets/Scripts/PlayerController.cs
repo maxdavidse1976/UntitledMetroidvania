@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             Instantiate(_shotToFire, _shotPoint.position, _shotPoint.rotation).moveDirection = new Vector2(transform.localScale.x, 0f);
+            _animator.SetTrigger("shotFired");
         }
 
         _animator.SetBool("isOnGround", _isOnGround);
