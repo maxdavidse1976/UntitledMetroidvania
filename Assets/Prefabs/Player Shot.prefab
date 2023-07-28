@@ -158,6 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletSpeed: 12
   _rigidbody2D: {fileID: 8674347399922050875}
+  _impactEffect: {fileID: 9079366727299136117, guid: ba962d6604cef4b49ac626a5c0e3eef1, type: 3}
   moveDirection: {x: 0, y: 0}
 --- !u!50 &8674347399922050875
 Rigidbody2D:

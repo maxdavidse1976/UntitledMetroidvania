@@ -4,6 +4,8 @@ public class BulletController : MonoBehaviour
 {
     [SerializeField] float _bulletSpeed;
     [SerializeField] Rigidbody2D _rigidbody2D;
+    [SerializeField] GameObject _impactEffect;
+
     public Vector2 moveDirection;
 
     void Update()
@@ -13,6 +15,10 @@ public class BulletController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (_impactEffect != null)
+        {
+            Instantiate(_impactEffect, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 
