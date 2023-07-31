@@ -31,48 +31,38 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        if (_dashRechargeCounter > 0)
-        {
-            _dashRechargeCounter -= Time.deltaTime;
-        }
-        else
-        {
-            if (Input.GetButtonDown("Fire2"))
-            {
-                _dashCounter = _dashTime;
-                ShowAfterImage();
-            }
-        }
+        CheckIfAllowedToDash();
 
         if (_dashCounter > 0)
         {
-            _dashCounter = _dashCounter - Time.deltaTime;
-            _rigidBody.velocity = new Vector2(_dashSpeed * transform.localScale.x, _rigidBody.velocity.y);
-
-            _afterImageCounter -= Time.deltaTime;
-            if (_afterImageCounter <= 0)
-            {
-                ShowAfterImage();
-            }
-            _dashRechargeCounter = _waitAfterDashing;
+            HandleDash();
         }
         else
         {
-            _rigidBody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * _moveSpeed, _rigidBody.velocity.y);
-
-            if (_rigidBody.velocity.x < 0)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else if (_rigidBody.velocity.x > 0)
-            {
-                transform.localScale = Vector3.one;
-            }
+            MovePlayer();
         }
 
-
         _isOnGround = Physics2D.OverlapCircle(_groundPoint.position, _groundCheckRadius, _whatIsGround);
-        
+
+        HandleJumping();
+
+        HandleFireWeapon();
+
+        _animator.SetBool("isOnGround", _isOnGround);
+        _animator.SetFloat("speed", Mathf.Abs(_rigidBody.velocity.x));
+    }
+
+    private void HandleFireWeapon()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Instantiate(_shotToFire, _shotPoint.position, _shotPoint.rotation).moveDirection = new Vector2(transform.localScale.x, 0f);
+            _animator.SetTrigger("shotFired");
+        }
+    }
+
+    private void HandleJumping()
+    {
         if (Input.GetButtonDown("Jump") && (_isOnGround || _canDoubleJump))
         {
             if (_isOnGround)
@@ -86,15 +76,49 @@ public class PlayerController : MonoBehaviour
             }
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
         }
+    }
 
-        if (Input.GetButtonDown("Fire1"))
+    private void MovePlayer()
+    {
+        _rigidBody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * _moveSpeed, _rigidBody.velocity.y);
+
+        if (_rigidBody.velocity.x < 0)
         {
-            Instantiate(_shotToFire, _shotPoint.position, _shotPoint.rotation).moveDirection = new Vector2(transform.localScale.x, 0f);
-            _animator.SetTrigger("shotFired");
+            transform.localScale = new Vector3(-1, 1, 1);
         }
+        else if (_rigidBody.velocity.x > 0)
+        {
+            transform.localScale = Vector3.one;
+        }
+    }
 
-        _animator.SetBool("isOnGround", _isOnGround);
-        _animator.SetFloat("speed", Mathf.Abs(_rigidBody.velocity.x));
+    private void HandleDash()
+    {
+        _dashCounter = _dashCounter - Time.deltaTime;
+        _rigidBody.velocity = new Vector2(_dashSpeed * transform.localScale.x, _rigidBody.velocity.y);
+
+        _afterImageCounter -= Time.deltaTime;
+        if (_afterImageCounter <= 0)
+        {
+            ShowAfterImage();
+        }
+        _dashRechargeCounter = _waitAfterDashing;
+    }
+
+    private void CheckIfAllowedToDash()
+    {
+        if (_dashRechargeCounter > 0)
+        {
+            _dashRechargeCounter -= Time.deltaTime;
+        }
+        else
+        {
+            if (Input.GetButtonDown("Fire2"))
+            {
+                _dashCounter = _dashTime;
+                ShowAfterImage();
+            }
+        }
     }
 
     public void ShowAfterImage()
