@@ -21,18 +21,27 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _timeBetweenAfterImages;
     [SerializeField] Color _afterImageColor;
 
+    [SerializeField] float _waitAfterDashing;
 
     bool _isOnGround;
     bool _canDoubleJump;
     float _dashCounter;
     float _afterImageCounter;
+    float _dashRechargeCounter;
     
     void Update()
     {
-        if (Input.GetButtonDown("Fire2"))
+        if (_dashRechargeCounter > 0)
         {
-            _dashCounter = _dashTime;
-            ShowAfterImage();
+            _dashRechargeCounter -= Time.deltaTime;
+        }
+        else
+        {
+            if (Input.GetButtonDown("Fire2"))
+            {
+                _dashCounter = _dashTime;
+                ShowAfterImage();
+            }
         }
 
         if (_dashCounter > 0)
@@ -45,6 +54,7 @@ public class PlayerController : MonoBehaviour
             {
                 ShowAfterImage();
             }
+            _dashRechargeCounter = _waitAfterDashing;
         }
         else
         {

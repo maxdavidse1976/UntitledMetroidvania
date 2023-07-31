@@ -230,8 +230,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1812735569
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 7815371044791450175, guid: 3607ff319a5a56141aa94c66e33ca304, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000afd9f393
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -708,6 +708,12 @@ MonoBehaviour:
   _jumpForce: 20
   _dashSpeed: 25
   _dashTime: 0.2
+  _spriteRenderer: {fileID: 110238275}
+  _afterImage: {fileID: 4953929251192757811, guid: 37b91c1fc491e9b4f9e0a3c867a1cdd6, type: 3}
+  _afterImageLifetime: 0.5
+  _timeBetweenAfterImages: 0.033333335
+  _afterImageColor: {r: 0.0990566, g: 0.6593117, b: 1, a: 0.7019608}
+  _waitAfterDashing: 0.25
 --- !u!1 &1432095488
 GameObject:
   m_ObjectHideFlags: 0
