@@ -12,22 +12,39 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float _groundCheckRadius = .2f;
     [SerializeField] float _moveSpeed = 8;
     [SerializeField] float _jumpForce = 20;
+    [SerializeField] float _dashSpeed = 25f;
+    [SerializeField] float _dashTime = .2f;
 
     bool _isOnGround;
     bool _canDoubleJump;
+    float _dashCounter;
     
     void Update()
     {
-        _rigidBody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * _moveSpeed, _rigidBody.velocity.y);
+        if (Input.GetButtonDown("Fire2"))
+        {
+            _dashCounter = _dashTime;
+        }
 
-        if (_rigidBody.velocity.x < 0)
+        if (_dashCounter > 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            _dashCounter = _dashCounter - Time.deltaTime;
+            _rigidBody.velocity = new Vector2(_dashSpeed * transform.localScale.x, _rigidBody.velocity.y);
         }
-        else if (_rigidBody.velocity.x > 0)
+        else
         {
-            transform.localScale = Vector3.one;
+            _rigidBody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * _moveSpeed, _rigidBody.velocity.y);
+
+            if (_rigidBody.velocity.x < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            else if (_rigidBody.velocity.x > 0)
+            {
+                transform.localScale = Vector3.one;
+            }
         }
+
 
         _isOnGround = Physics2D.OverlapCircle(_groundPoint.position, _groundCheckRadius, _whatIsGround);
         

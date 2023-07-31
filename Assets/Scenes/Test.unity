@@ -706,6 +706,8 @@ MonoBehaviour:
   _groundCheckRadius: 0.2
   _moveSpeed: 8
   _jumpForce: 20
+  _dashSpeed: 25
+  _dashTime: 0.2
 --- !u!1 &1432095488
 GameObject:
   m_ObjectHideFlags: 0
