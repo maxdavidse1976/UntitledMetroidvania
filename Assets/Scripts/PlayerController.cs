@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -23,12 +24,17 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] float _waitAfterDashing;
 
+    [SerializeField] GameObject _standingSprite; 
+    [SerializeField] GameObject _ballSprite;
+    [SerializeField] float _waitToTransform;
+
     bool _isOnGround;
     bool _canDoubleJump;
     float _dashCounter;
     float _afterImageCounter;
     float _dashRechargeCounter;
-    
+    float _ballCounter;
+
     void Update()
     {
         CheckIfAllowedToDash();
@@ -48,8 +54,46 @@ public class PlayerController : MonoBehaviour
 
         HandleFireWeapon();
 
+        HandleBallMode();
+
         _animator.SetBool("isOnGround", _isOnGround);
         _animator.SetFloat("speed", Mathf.Abs(_rigidBody.velocity.x));
+    }
+
+    private void HandleBallMode()
+    {
+        if (!_ballSprite.activeSelf)
+        {
+            if (Input.GetAxisRaw("Vertical") < -.9f)
+            {
+                _ballCounter -= Time.deltaTime;
+                if (_ballCounter <= 0)
+                {
+                    _ballSprite.SetActive(true);
+                    _standingSprite.SetActive(false);
+                }
+            }
+            else
+            {
+                _ballCounter = _waitToTransform;
+            }
+        }
+        else
+        {
+            if (Input.GetAxisRaw("Vertical") > .9f)
+            {
+                _ballCounter -= Time.deltaTime;
+                if (_ballCounter <= 0)
+                {
+                    _standingSprite.SetActive(true);
+                    _ballSprite.SetActive(false);
+                }
+            }
+            else
+            {
+                _ballCounter = _waitToTransform;
+            }
+        }
     }
 
     private void HandleFireWeapon()
@@ -113,7 +157,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (Input.GetButtonDown("Fire2"))
+            if (Input.GetButtonDown("Fire2") && _standingSprite.activeSelf)
             {
                 _dashCounter = _dashTime;
                 ShowAfterImage();
